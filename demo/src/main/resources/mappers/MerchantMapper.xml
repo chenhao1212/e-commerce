@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shequds.demo.mapper.MerchantMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shequds.demo.entity.Merchant">
+        <id column="id" property="id" />
+        <result column="merchant_name" property="merchantName" />
+        <result column="pid" property="pid" />
+        <result column="cid" property="cid" />
+        <result column="did" property="did" />
+        <result column="address" property="address" />
+        <result column="merchant_type_id" property="merchantTypeId" />
+        <result column="merchant_status_id" property="merchantStatusId" />
+        <result column="accessory_id" property="accessoryId" />
+        <result column="account_id" property="accountId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, merchant_name, pid, cid, did, address, merchant_type_id, merchant_status_id, accessory_id, account_id
+    </sql>
+
+    <resultMap id="re" type="com.shequds.demo.entity.Merchant">
+        <id column="id" property="id" />
+        <result column="merchant_name" property="merchantName" />
+        <result column="pid" property="pid" />
+        <result column="cid" property="cid" />
+        <result column="did" property="did" />
+        <result column="address" property="address" />
+        <result column="merchant_type_id" property="merchantTypeId" />
+        <result column="merchant_status_id" property="merchantStatusId" />
+        <result column="accessory_id" property="accessoryId" />
+
+
+        <result column="pname" property="pname" />
+        <result column="cname" property="cname" />
+        <result column="dname" property="dname" />
+        <result column="leixing" property="leixing" />
+        <result column="zhuangtai" property="zhuangtai" />
+        <result column="zhizhao" property="zhizhao" />
+        <result column="faren" property="faren" />
+        <result column="anname" property="anname" />
+        <result column="kahao" property="kahao" />
+        <result column="zhanghao" property="zhanghao" />
+        <result column="price" property="price" />
+    </resultMap>
+    <select id="select" resultMap="re">
+        SELECT
+	m.*,
+	p.city_name pname,
+	c.city_name cname,
+	d.city_name dname,
+	mt. NAME leixing,
+	ms. STATUS zhuangtai,
+	ar.license_number zhizhao,
+	ar.legal_person faren,
+	an.account_name anname,
+	an.brank_number kahao,
+	an.account_number zhanghao,
+	an.balance price
+FROM
+	merchant m
+LEFT JOIN city p ON p.id = m.pid
+LEFT JOIN city c ON c.id = m.cid
+LEFT JOIN city d ON d.id = m.did
+LEFT JOIN merchant_type mt ON mt.id = m.merchant_type_id
+LEFT JOIN merchant_status ms ON ms.id = m.merchant_status_id
+LEFT JOIN accessory ar ON ar.id = m.accessory_id
+LEFT JOIN account an ON an.id = m.account_id
+   </select>
+</mapper>
